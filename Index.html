@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Umbrella</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a202c;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 48rem;
+            margin: 1rem;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .umbrella-preview {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .umbrella-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .logo-preview {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 30%;
+            max-height: 30%;
+            object-fit: contain;
+        }
+        .customization {
+            width: 100%;
+        }
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .color-option {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .color-option.selected {
+            border-color: black;
+        }
+        .upload-info {
+            font-size: 0.875rem;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+        .upload-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: white;
+            background-color: #3182ce;
+            border: 1px solid transparent;
+            border-radius: 0.375rem;
+            cursor: pointer;
+        }
+        .upload-button:hover {
+            background-color: #2c5282;
+        }
+        .file-name {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #4a5568;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+        }
+        .remove-button {
+            color: #e53e3e;
+            cursor: pointer;
+        }
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2rem;
+            height: 2rem;
+            border: 0.25rem solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #3182ce;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @media (min-width: 768px) {
+            .flex-container {
+                flex-direction: row;
+            }
+            .umbrella-preview, .customization {
+                width: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-content">
+            <h2>Custom Umbrella</h2>
+            <div class="flex-container">
+                <div class="umbrella-preview">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Blue%20umbrella-ax5s455RlLb0SSDDqkW6kduuM4R2ng.png" alt="Blue umbrella" class="umbrella-image">
+                    <img id="logoPreview" class="logo-preview" style="display: none;">
+                    <div id="loader" class="loader" style="display: none;"></div>
+                </div>
+                <div class="customization">
+                    <h3>Customize your umbrella</h3>
+                    <div class="color-options" id="colorOptions"></div>
+                    <p class="upload-info">
+                        Upload a logo for an instant preview.<br>
+                        .png and .jpg files only. Max file size is 5MB.
+                    </p>
+                    <input type="file" id="fileInput" accept=".png,.jpg,.jpeg" style="display: none;">
+                    <div id="uploadButtonContainer">
+                        <button class="upload-button" id="uploadButton">
+                            <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 22" width="24" height="22" style="margin-right: 0.5rem;">
+                                <path fill="currentColor" d="M23.1505 10.7255C22.7712 10.7255 22.4677 11.0277 22.4677 11.4056V17.5919C22.4677 19.2746 21.0919 20.6398 19.4076 20.6398H4.42576C2.73638 20.6398 1.36566 19.2695 1.36566 17.5919V11.3048C1.36566 10.927 1.06218 10.6247 0.682831 10.6247C0.30348 10.6247 0 10.927 0 11.3048V17.5919C0 20.0252 1.9878 22 4.42576 22H19.4076C21.8506 22 23.8333 20.0202 23.8333 17.5919V11.4056C23.8333 11.0328 23.5299 10.7255 23.1505 10.7255Z"></path>
+                                <path fill="currentColor" d="M8.05759 5.48615L11.234 2.32242V16.1209C11.234 16.4987 11.5375 16.801 11.9168 16.801C12.2962 16.801 12.5997 16.4987 12.5997 16.1209V2.32242L15.7761 5.48615C15.9076 5.61713 16.0846 5.68766 16.2566 5.68766C16.4336 5.68766 16.6056 5.62217 16.7371 5.48615C17.0052 5.21914 17.0052 4.79093 16.7371 4.52393L12.3974 0.201511C12.2709 0.0755667 12.0939 0 11.9168 0C11.7348 0 11.5628 0.070529 11.4363 0.201511L7.09656 4.52393C6.82849 4.79093 6.82849 5.21914 7.09656 5.48615C7.35958 5.74811 7.79457 5.74811 8.05759 5.48615Z"></path>
+                            </svg>
+                            Upload Logo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const umbrellaColors = [
+            { name: 'Yellow', hex: '#FFFF00', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Yello%20umbrella-CsJLmPmhBWlI8nwFmpyTWJBnuSR8fH.png', bgColor: '#FFFDE7' },
+            { name: 'Blue', hex: '#0000FF', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Blue%20umbrella-ax5s455RlLb0SSDDqkW6kduuM4R2ng.png', bgColor: '#E3F2FD' },
+            { name: 'Pink', hex: '#FF00FF', image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pink%20umbrella-XVzeXvHk93tozCBNAFbHqmQU5q7uUj.png', bgColor: '#FCE4EC' },
+        ];
+
+        let selectedColor = umbrellaColors[1];
+        let logo = null;
+
+        const colorOptions = document.getElementById('colorOptions');
+        const umbrellaImage = document.querySelector('.umbrella-image');
+        const logoPreview = document.getElementById('logoPreview');
+        const fileInput = document.getElementById('fileInput');
+        const uploadButton = document.getElementById('uploadButton');
+        const uploadButtonContainer = document.getElementById('uploadButtonContainer');
+        const loader = document.getElementById('loader');
+        const cardContent = document.querySelector('.card-content');
+
+        function createColorOptions() {
+            umbrellaColors.forEach((color, index) => {
+                const colorButton = document.createElement('button');
+                colorButton.className = `color-option ${index === 1 ? 'selected' : ''}`;
+                colorButton.style.backgroundColor = color.hex;
+                colorButton.setAttribute('aria-label', `Select ${color.name} color`);
+                colorButton.onclick = () => handleColorChange(color);
+                colorOptions.appendChild(colorButton);
+            });
+        }
+
+        function handleColorChange(color) {
+            selectedColor = color;
+            umbrellaImage.src = color.image;
+            umbrellaImage.alt = `${color.name} umbrella`;
+            cardContent.style.backgroundColor = color.bgColor;
+            uploadButton.style.backgroundColor = color.hex;
+            document.querySelectorAll('.color-option').forEach(button => {
+                button.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                loader.style.display = 'block';
+                logoPreview.style.display = 'none';
+                setTimeout(() => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        logo = e.target.result;
+                        logoPreview.src = logo;
+                        logoPreview.style.display = 'block';
+                        loader.style.display = 'none';
+                        updateUploadButton(file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }, 1500); // Simulating a delay for demonstration
+            }
+        }
+
+        function updateUploadButton(fileName) {
+            uploadButtonContainer.innerHTML = `
+                <div class="file-name">
+                    ${fileName}
+                    <span class="remove-button" onclick="removeLogo()">&times;</span>
+                </div>
+            `;
+        }
+
+        function removeLogo() {
+            logo = null;
+            logoPreview.style.display = 'none';
+            fileInput.value = '';
+            uploadButtonContainer.innerHTML = `
+                <button class="upload-button" id="uploadButton" onclick="fileInput.click()">
+                    <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 24 22" width="24" height="22" style="margin-right: 0.5rem;">
+                        <path fill="currentColor" d="M23.1505 10.7255C22.7712 10.7255 22.4677 11.0277 22.4677 11.4056V17.5919C22.4677 19.2746 21.0919 20.6398 19.4076 20.6398H4.42576C2.73638 20.6398 1.36566 19.2695 1.36566 17.5919V11.3048C1.36566 10.927 1.06218 10.6247 0.682831 10.6247C0.30348 10.6247 0 10.927 0 11.3048V17.5919C0 20.0252 1.9878 22 4.42576 22H19.4076C21.8506 22 23.8333 20.0202 23.8333 17.5919V11.4056C23.8333 11.0328 23.5299 10.7255 23.1505 10.7255Z"></path>
+                        <path fill="currentColor" d="M8.05759 5.48615L11.234 2.32242V16.1209C11.234 16.4987 11.5375 16.801 11.9168 16.801C12.2962 16.801 12.5997 16.4987 12.5997 16.1209V2.32242L15.7761 5.48615C15.9076 5.61713 16.0846 5.68766 16.2566 5.68766C16.4336 5.68766 16.6056 5.62217 16.7371 5.48615C17.0052 5.21914 17.0052 4.79093 16.7371 4.52393L12.3974 0.201511C12.2709 0.0755667 12.0939 0 11.9168 0C11.7348 0 11.5628 0.070529 11.4363 0.201511L7.09656 4.52393C6.82849 4.79093 6.82849 5.21914 7.09656 5.48615C7.35958 5.74811 7.79457 5.74811 8.05759 5.48615Z"></path>
+                    </svg>
+                    Upload Logo
+                </button>
+            `;
+            uploadButton.style.backgroundColor = selectedColor.hex;
+        }
+
+        createColorOptions();
+        fileInput.addEventListener('change', handleLogoUpload);
+        uploadButton.addEventListener('click', () => fileInput.click());
+    </script>
+</body>
+</html>
